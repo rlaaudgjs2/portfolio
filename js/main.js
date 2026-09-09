@@ -57,6 +57,10 @@ function categoryLabel(project) {
 }
 
 function projectVisualHTML(index, project) {
+  if (project.image) {
+    return `<img class="project-photo" src="${project.image}" alt="${project.title}" />`;
+  }
+
   const kind = index % 3;
   const label = String(index + 1).padStart(2, "0");
 

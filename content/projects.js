@@ -4,6 +4,7 @@
 //
 // 공통 스키마
 // - id, title, subtitle: 식별자와 제목
+// - image: 실제 스크린샷/아이콘 경로 (선택, 없으면 장식용 목업이 표시됨)
 // - period, type, role, scale: 언제/어떤 프로젝트/무슨 역할/규모
 // - stack: 기술 스택 태그
 // - overview: 프로젝트 한 단락 요약
@@ -17,6 +18,7 @@
 const PROJECT_DETAILS = [
   {
     id: "aspa",
+    image: "assets/projects/aspa.png",
     title: "ASPA",
     subtitle: "AI 기반 개인 맞춤 학습 도우미 Android 애플리케이션",
     period: "2025.07 - 2025.09",
@@ -322,6 +324,7 @@ const PROJECT_DETAILS = [
 
   {
     id: "onz",
+    image: "assets/projects/onz.png",
     title: "onz",
     subtitle: "지도 기반 칵테일 바 탐색 앱 (1차 프로젝트)",
     period: "2025.01 - 2025.06",
@@ -415,6 +418,7 @@ const PROJECT_DETAILS = [
 
   {
     id: "cocktail-front",
+    image: "assets/projects/onz.png",
     title: "onz",
     subtitle: "칵테일 정보 제공 앱 (2차 프로젝트)",
     period: "2025.10 - 2026.01",
@@ -522,6 +526,7 @@ const PROJECT_DETAILS = [
 
   {
     id: "health-note",
+    image: "assets/projects/health-note.png",
     title: "Health Note",
     subtitle: "날짜별 운동·세트·몸무게·사진 기록 및 루틴 관리 앱",
     period: "2026.01 - 2026.03",

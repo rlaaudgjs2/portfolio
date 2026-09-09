@@ -6,7 +6,7 @@ const PROFILE = {
   title: "App Mobile Developer",
   heroGreeting: "안녕하세요,",
   heroDescription: "사용자의 가치를 우선적으로 생각하는 개발자입니다.",
-  photo: "assets/profile-placeholder.svg", // assets 폴더에 사진을 넣고 경로를 바꾸세요
+  photo: "assets/profile.jpg",
   bio: "사용자의 가치를 우선적으로 생각하는 개발자입니다.",
   contactDescription: "새로운 프로젝트나 협업 제안은 언제든 환영합니다.",
   contact: [

@@ -586,6 +586,13 @@ img {
   background: #e6dde3;
 }
 
+.project-photo {
+  max-width: 78%;
+  max-height: 82%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.14));
+}
+
 .image-label {
   position: absolute;
   top: 22px;
