@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>개발자 포트폴리오</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- 상단: 프로필 (사진, 학력, 자격증) -->
+  <header class="profile">
+    <div class="profile-inner">
+      <div class="profile-photo">
+        <img id="profile-photo" src="assets/profile-placeholder.svg" alt="프로필 사진" />
+      </div>
+      <div class="profile-info">
+        <h1 id="profile-name">이름</h1>
+        <p id="profile-title" class="profile-title">직무 / 한줄 소개</p>
+        <p id="profile-bio" class="profile-bio"></p>
+
+        <div class="profile-contact" id="profile-contact"></div>
+
+        <section class="profile-section">
+          <h2>학력</h2>
+          <ul id="education-list" class="info-list"></ul>
+        </section>
+
+        <section class="profile-section">
+          <h2>자격증</h2>
+          <ul id="certification-list" class="info-list"></ul>
+        </section>
+      </div>
+    </div>
+  </header>
+
+  <!-- 하단: 연도별 프로젝트 -->
+  <main class="projects">
+    <h2 class="section-title">Projects</h2>
+    <div id="project-timeline" class="project-timeline"></div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="footer-year"></span></p>
+  </footer>
+
+  <!-- 프로젝트 상세 모달 -->
+  <div id="project-modal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" data-close-modal aria-label="닫기">&times;</button>
+      <img id="modal-photo" class="modal-photo" src="" alt="" />
+      <div class="modal-body">
+        <span id="modal-year" class="modal-year"></span>
+        <h3 id="modal-title"></h3>
+        <div class="modal-field">
+          <h4>주요 내용</h4>
+          <p id="modal-content"></p>
+        </div>
+        <div class="modal-field">
+          <h4>규모</h4>
+          <p id="modal-scale"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

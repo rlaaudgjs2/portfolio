@@ -1,0 +1,383 @@
+:root {
+  --color-bg: #0f1115;
+  --color-surface: #171a21;
+  --color-surface-alt: #1f232c;
+  --color-border: #2a2f3a;
+  --color-text: #e8eaed;
+  --color-text-muted: #9aa1ac;
+  --color-accent: #5b8cff;
+  --max-width: 960px;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ---------- Profile Header ---------- */
+
+.profile {
+  border-bottom: 1px solid var(--color-border);
+  padding: 64px 24px;
+}
+
+.profile-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.profile-photo img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.profile-info {
+  flex: 1;
+  min-width: 260px;
+}
+
+.profile-info h1 {
+  margin: 0 0 4px;
+  font-size: 2rem;
+}
+
+.profile-title {
+  color: var(--color-accent);
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.profile-bio {
+  color: var(--color-text-muted);
+  margin: 0 0 16px;
+}
+
+.profile-contact {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.contact-link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-bottom: 1px solid transparent;
+}
+
+.contact-link:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.profile-section {
+  margin-bottom: 24px;
+}
+
+.profile-section h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin: 0 0 10px;
+}
+
+.info-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.info-list li {
+  display: flex;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--color-border);
+  font-size: 0.95rem;
+}
+
+.info-list li:last-child {
+  border-bottom: none;
+}
+
+.info-period {
+  color: var(--color-text-muted);
+  min-width: 110px;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Projects ---------- */
+
+.projects {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 64px 24px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin: 0 0 32px;
+}
+
+.project-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.project-timeline::before {
+  content: "";
+  position: absolute;
+  left: 46px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--color-border);
+}
+
+.project-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  cursor: pointer;
+  outline: none;
+}
+
+.project-year {
+  width: 94px;
+  flex-shrink: 0;
+  text-align: right;
+  padding-right: 20px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-accent);
+  position: relative;
+}
+
+.project-year::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 0 4px var(--color-bg);
+}
+
+.project-card {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 14px;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.project-item:hover .project-card,
+.project-item:focus-visible .project-card {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+  background: var(--color-surface-alt);
+}
+
+.project-thumb {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: var(--color-surface-alt);
+}
+
+.project-card-body h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+}
+
+.project-card-body p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ---------- Modal ---------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 24px;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  max-width: 560px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: var(--color-text);
+  font-size: 1.4rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 1;
+  z-index: 2;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-photo {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.modal-body {
+  padding: 24px 28px 28px;
+}
+
+.modal-year {
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.modal-body h3 {
+  margin: 4px 0 20px;
+  font-size: 1.4rem;
+}
+
+.modal-field {
+  margin-bottom: 18px;
+}
+
+.modal-field h4 {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.modal-field p {
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .profile-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-contact {
+    justify-content: center;
+  }
+
+  .info-list li {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .project-timeline::before {
+    left: 8px;
+  }
+
+  .project-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .project-year {
+    width: auto;
+    text-align: left;
+    padding-left: 24px;
+    padding-right: 0;
+  }
+
+  .project-year::after {
+    left: 3px;
+    right: auto;
+  }
+
+  .project-card {
+    flex-direction: column;
+  }
+
+  .project-thumb {
+    width: 100%;
+    height: 160px;
+  }
+}
