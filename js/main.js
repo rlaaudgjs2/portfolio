@@ -1,10 +1,11 @@
-function renderProfile() {
-  document.getElementById("profile-photo").src = PROFILE.photo;
-  document.getElementById("profile-name").textContent = PROFILE.name;
-  document.getElementById("profile-title").textContent = PROFILE.title;
-  document.getElementById("profile-bio").textContent = PROFILE.bio;
+function renderHero() {
+  document.getElementById("hero-greeting").textContent = PROFILE.heroGreeting;
+  document.getElementById("hero-title").innerHTML = `개발자<br />${PROFILE.name}입니다.`;
+  document.getElementById("hero-description").textContent = PROFILE.heroDescription;
+}
 
-  const contact = document.getElementById("profile-contact");
+function renderContactList(containerId) {
+  const container = document.getElementById(containerId);
   PROFILE.contact.forEach((item) => {
     const a = document.createElement("a");
     a.href = item.href;
@@ -14,56 +15,75 @@ function renderProfile() {
       a.target = "_blank";
       a.rel = "noopener noreferrer";
     }
-    contact.appendChild(a);
+    container.appendChild(a);
   });
+}
+
+function renderAbout() {
+  document.getElementById("profile-photo").src = PROFILE.photo;
+  document.getElementById("profile-bio").textContent = PROFILE.bio;
+
+  renderContactList("profile-contact");
+  renderContactList("footer-contact");
 
   const educationList = document.getElementById("education-list");
-  PROFILE.education.forEach((edu) => {
+  PROFILE.education.forEach((edu, i) => {
     const li = document.createElement("li");
+    li.className = "reveal";
+    li.style.transitionDelay = `${i * 80}ms`;
     li.innerHTML = `<span class="info-period">${edu.period}</span><span class="info-detail">${edu.school} · ${edu.detail}</span>`;
     educationList.appendChild(li);
   });
 
   const certList = document.getElementById("certification-list");
-  PROFILE.certifications.forEach((cert) => {
+  PROFILE.certifications.forEach((cert, i) => {
     const li = document.createElement("li");
+    li.className = "reveal";
+    li.style.transitionDelay = `${i * 80}ms`;
     li.innerHTML = `<span class="info-period">${cert.date}</span><span class="info-detail">${cert.name}</span>`;
     certList.appendChild(li);
   });
 }
 
 function renderProjects() {
-  const timeline = document.getElementById("project-timeline");
+  const list = document.getElementById("project-list");
   const sorted = [...PROJECTS].sort((a, b) => b.year - a.year);
 
-  sorted.forEach((project) => {
-    const item = document.createElement("article");
-    item.className = "project-item";
-    item.tabIndex = 0;
-    item.setAttribute("role", "button");
-    item.setAttribute("aria-label", `${project.year}년 프로젝트 ${project.title} 자세히 보기`);
+  sorted.forEach((project, i) => {
+    const row = document.createElement("article");
+    row.className = "project-row reveal";
+    row.style.transitionDelay = `${i * 100}ms`;
+    row.tabIndex = 0;
+    row.setAttribute("role", "button");
+    row.setAttribute("aria-label", `${project.year}년 프로젝트 ${project.title} 자세히 보기`);
 
-    item.innerHTML = `
-      <div class="project-year">${project.year}</div>
-      <div class="project-card">
-        <img class="project-thumb" src="${project.thumbnail}" alt="${project.title}" />
-        <div class="project-card-body">
-          <h3>${project.title}</h3>
-          <p>${project.summary}</p>
-        </div>
+    const tags = (project.stack || [])
+      .map((tag) => `<span class="tag">${tag}</span>`)
+      .join("");
+
+    row.innerHTML = `
+      <div class="project-row-index">${String(i + 1).padStart(2, "0")}</div>
+      <div class="project-row-content">
+        <span class="project-row-year">${project.year}</span>
+        <h3>${project.title}</h3>
+        <p>${project.summary}</p>
+        ${tags ? `<div class="project-row-tags">${tags}</div>` : ""}
+      </div>
+      <div class="project-row-media">
+        <img src="${project.thumbnail}" alt="${project.title}" />
       </div>
     `;
 
     const open = () => openModal(project);
-    item.addEventListener("click", open);
-    item.addEventListener("keydown", (e) => {
+    row.addEventListener("click", open);
+    row.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         open();
       }
     });
 
-    timeline.appendChild(item);
+    list.appendChild(row);
   });
 }
 
@@ -97,8 +117,26 @@ function initModal() {
   });
 }
 
+function initReveal() {
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+  );
+
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+}
+
 document.getElementById("footer-year").textContent = new Date().getFullYear();
 
-renderProfile();
+renderHero();
+renderAbout();
 renderProjects();
 initModal();
+initReveal();

@@ -8,40 +8,55 @@
 </head>
 <body>
 
-  <!-- 상단: 프로필 (사진, 학력, 자격증) -->
-  <header class="profile">
-    <div class="profile-inner">
-      <div class="profile-photo">
-        <img id="profile-photo" src="assets/profile-placeholder.svg" alt="프로필 사진" />
-      </div>
-      <div class="profile-info">
-        <h1 id="profile-name">이름</h1>
-        <p id="profile-title" class="profile-title">직무 / 한줄 소개</p>
-        <p id="profile-bio" class="profile-bio"></p>
-
-        <div class="profile-contact" id="profile-contact"></div>
-
-        <section class="profile-section">
-          <h2>학력</h2>
-          <ul id="education-list" class="info-list"></ul>
-        </section>
-
-        <section class="profile-section">
-          <h2>자격증</h2>
-          <ul id="certification-list" class="info-list"></ul>
-        </section>
-      </div>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <p class="hero-greeting reveal" id="hero-greeting"></p>
+      <h1 class="hero-title reveal" id="hero-title"></h1>
+      <p class="hero-description reveal" id="hero-description"></p>
     </div>
   </header>
 
-  <!-- 하단: 연도별 프로젝트 -->
-  <main class="projects">
-    <h2 class="section-title">Projects</h2>
-    <div id="project-timeline" class="project-timeline"></div>
-  </main>
+  <!-- About: 사진, 소개, 학력, 자격증 -->
+  <section class="about" id="about">
+    <div class="container about-inner">
+      <div class="about-photo reveal">
+        <img id="profile-photo" src="assets/profile-placeholder.svg" alt="프로필 사진" />
+      </div>
+      <div class="about-info">
+        <h2 class="section-label reveal">About</h2>
+        <p class="about-bio reveal" id="profile-bio"></p>
+        <div class="contact-list reveal" id="profile-contact"></div>
 
-  <footer class="site-footer">
-    <p>&copy; <span id="footer-year"></span></p>
+        <div class="about-columns">
+          <div class="about-col reveal">
+            <h3>학력</h3>
+            <ul id="education-list" class="info-list"></ul>
+          </div>
+          <div class="about-col reveal">
+            <h3>자격증</h3>
+            <ul id="certification-list" class="info-list"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects: 연도별 프로젝트 -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <h2 class="section-label reveal">Projects</h2>
+      <div id="project-list" class="project-list"></div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <footer class="contact" id="contact">
+    <div class="container">
+      <h2 class="section-label reveal">Contact</h2>
+      <div class="contact-list contact-list-lg reveal" id="footer-contact"></div>
+      <p class="footer-copy">&copy; <span id="footer-year"></span></p>
+    </div>
   </footer>
 
   <!-- 프로젝트 상세 모달 -->

@@ -3,6 +3,8 @@
 const PROFILE = {
   name: "홍길동",
   title: "Backend Developer",
+  heroGreeting: "안녕하세요,",
+  heroDescription: "문제를 발견하고 기술로 해결합니다.",
   photo: "assets/profile-placeholder.svg", // assets 폴더에 사진을 넣고 경로를 바꾸세요
   bio: "한 줄 소개를 여기에 작성하세요.",
   contact: [
@@ -18,6 +20,7 @@ const PROFILE = {
 };
 
 // 연도별 프로젝트: year는 하나의 프로젝트만 대응됩니다.
+// stack은 선택 항목입니다 (기술 스택 태그로 표시, 없으면 생략 가능).
 const PROJECTS = [
   {
     year: 2024,
@@ -26,6 +29,7 @@ const PROJECTS = [
     summary: "카드에 보여줄 한 줄 요약",
     mainContent: "클릭 시 보여줄 주요 내용을 자세히 작성하세요.",
     scale: "예: 팀 4명 / 3개월 / 사용자 1만명",
+    stack: ["React", "TypeScript"],
   },
   {
     year: 2023,
@@ -34,5 +38,6 @@ const PROJECTS = [
     summary: "카드에 보여줄 한 줄 요약",
     mainContent: "클릭 시 보여줄 주요 내용을 자세히 작성하세요.",
     scale: "예: 개인 프로젝트 / 2개월",
+    stack: ["Node.js"],
   },
 ];
