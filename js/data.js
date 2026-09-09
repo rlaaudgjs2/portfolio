@@ -2,8 +2,8 @@
 // 프로젝트 상세 내용은 content/projects.js의 PROJECT_DETAILS를 사용합니다.
 
 const PROFILE = {
-  name: "홍길동", // TODO: 실제 이름으로 교체해주세요
-  title: "Mobile App Developer", // TODO: 원하시는 직함으로 교체해주세요 (프로젝트 이력 기준으로 임시 지정)
+  name: "김명헌",
+  title: "App Mobile Developer",
   heroGreeting: "안녕하세요,",
   heroDescription: "사용자의 가치를 우선적으로 생각하는 개발자입니다.",
   photo: "assets/profile-placeholder.svg", // assets 폴더에 사진을 넣고 경로를 바꾸세요
@@ -11,7 +11,6 @@ const PROFILE = {
   contactDescription: "새로운 프로젝트나 협업 제안은 언제든 환영합니다.",
   contact: [
     { label: "Email", value: "rlaaudgjs2@naver.com", href: "mailto:rlaaudgjs2@naver.com" },
-    { label: "Phone", value: "010-2356-2640", href: "tel:01023562640" },
     { label: "GitHub", value: "github.com/rlaaudgjs2", href: "https://github.com/rlaaudgjs2" },
     { label: "Blog", value: "rlaaudgjs2.tistory.com", href: "http://rlaaudgjs2.tistory.com" },
   ],

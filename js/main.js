@@ -354,6 +354,167 @@ function initModal() {
   });
 }
 
+/* ================= PRINT RESUME (PDF 저장) ================= */
+
+function joinLinks(links) {
+  return (links || []).map((l) => `${l.label}: ${l.href}`).join("  ·  ");
+}
+
+function printHighlightHTML(h) {
+  const parts = [];
+  if (h.why) parts.push(`<p><b>Why</b> — ${h.why}</p>`);
+  if (h.what) parts.push(`<p><b>What</b> — ${h.what}</p>`);
+  if (h.how) parts.push(`<p><b>How</b> — ${h.how}</p>`);
+  const code = h.code ? `<pre>${h.code.snippet}</pre>` : "";
+  return `<div class="pr-item"><p class="pr-item-title">${h.title}</p>${parts.join("")}${code}</div>`;
+}
+
+function printTroubleshootingHTML(t) {
+  const parts = [];
+  if (t.problem) parts.push(`<p><b>Problem</b> — ${t.problem}</p>`);
+  if (t.cause) parts.push(`<p><b>Cause</b> — ${t.cause}</p>`);
+  if (t.solution) parts.push(`<p><b>Solution</b> — ${t.solution}</p>`);
+  const code = t.code ? `<pre>${t.code.snippet}</pre>` : "";
+  return `<div class="pr-item"><p class="pr-item-title">${t.title}</p>${parts.join("")}${code}</div>`;
+}
+
+function printDecisionHTML(d) {
+  const parts = [`<p><b>Decision</b> — ${d.decision}</p>`];
+  if (d.reason) parts.push(`<p><b>Reason</b> — ${d.reason}</p>`);
+  if (d.tradeoff) parts.push(`<p><b>Trade-off</b> — ${d.tradeoff}</p>`);
+  return `<div class="pr-item"><p class="pr-item-title">${d.title}</p>${parts.join("")}</div>`;
+}
+
+function printProjectHTML(project) {
+  const sections = [];
+
+  sections.push(`
+    <h3>${project.title} — ${project.subtitle}</h3>
+    <p class="pr-meta">${project.type} · ${project.period}</p>
+    <p class="pr-overview">${project.overview}</p>
+    <p class="pr-stack"><b>Stack</b> — ${(project.stack || []).join(", ")}</p>
+    <p class="pr-stack"><b>규모</b> — ${project.scale}</p>
+    ${project.role ? `<p class="pr-stack"><b>역할</b> — ${project.role}</p>` : ""}
+    ${project.links && project.links.length ? `<p class="pr-links"><b>Links</b> — ${joinLinks(project.links)}</p>` : ""}
+  `);
+
+  if (project.highlights && project.highlights.length) {
+    sections.push(`<h4>주요 구현</h4>${project.highlights.map(printHighlightHTML).join("")}`);
+  }
+  if (project.troubleshooting && project.troubleshooting.length) {
+    sections.push(`<h4>트러블슈팅</h4>${project.troubleshooting.map(printTroubleshootingHTML).join("")}`);
+  }
+  if (project.decisions && project.decisions.length) {
+    sections.push(`<h4>기술적 의사결정</h4>${project.decisions.map(printDecisionHTML).join("")}`);
+  }
+  if (project.learnings && project.learnings.length) {
+    sections.push(`<h4>배운 점</h4><ul>${project.learnings.map((l) => `<li>${l}</li>`).join("")}</ul>`);
+  }
+  if (project.minorFeatures && project.minorFeatures.length) {
+    sections.push(`<h4>기타 기능</h4><ul>${project.minorFeatures.map((f) => `<li>${f}</li>`).join("")}</ul>`);
+  }
+  if (project.minorTroubleshooting && project.minorTroubleshooting.length) {
+    sections.push(
+      `<h4>기타 트러블슈팅</h4><ul>${project.minorTroubleshooting
+        .map((t) => `<li><b>${t.problem}</b> — 원인: ${t.cause} / 해결: ${t.solution}</li>`)
+        .join("")}</ul>`
+    );
+  }
+  if (project.needsInput && project.needsInput.length) {
+    sections.push(`<h4>추가 예정 항목</h4><ul>${project.needsInput.map((n) => `<li>${n}</li>`).join("")}</ul>`);
+  }
+
+  return `<article class="pr-project">${sections.join("")}</article>`;
+}
+
+function renderPrintResume() {
+  const container = document.getElementById("print-resume");
+
+  const contactLine = PROFILE.contact.map((c) => `${c.label}: ${c.value}`).join("  ·  ");
+
+  const educationHTML = PROFILE.education
+    .map((edu) => `<li><b>${edu.period}</b> — ${edu.school}${edu.detail ? ` · ${edu.detail}` : ""}</li>`)
+    .join("");
+
+  const certHTML = PROFILE.certifications
+    .map(
+      (c) =>
+        `<li><b>${c.date}</b> — ${c.name}${c.issuer ? ` · ${c.issuer}` : ""}${c.regNo ? ` · 등록번호 ${c.regNo}` : ""}</li>`
+    )
+    .join("");
+
+  const awardsHTML = AWARDS.map(
+    (a) => `<li><b>${a.date}</b> — ${a.title} · ${a.org}${a.description ? ` · ${a.description}` : ""}</li>`
+  ).join("");
+
+  const activitiesHTML = ACTIVITIES.map(
+    (a) => `<li><b>${a.period}</b> — ${a.title} · ${a.org}${a.description ? ` · ${a.description}` : ""}</li>`
+  ).join("");
+
+  const techHTML = TECH_STACK.categories
+    .map((cat) => `<li><b>${cat.label}</b> — ${cat.items.join(", ")}</li>`)
+    .join("");
+
+  const projectsHTML = PROJECT_DETAILS.map(printProjectHTML).join("");
+
+  container.innerHTML = `
+    <header class="pr-header">
+      <h1>${PROFILE.name}</h1>
+      <p class="pr-title">${PROFILE.title}</p>
+      <p class="pr-contact">${contactLine}</p>
+    </header>
+
+    <section class="pr-section">
+      <h2>Bio</h2>
+      <p>${PROFILE.bio}</p>
+    </section>
+
+    <section class="pr-section">
+      <h2>학력</h2>
+      <ul>${educationHTML}</ul>
+    </section>
+
+    <section class="pr-section">
+      <h2>자격증</h2>
+      <ul>${certHTML}</ul>
+    </section>
+
+    <section class="pr-section">
+      <h2>수상</h2>
+      <ul>${awardsHTML}</ul>
+    </section>
+
+    <section class="pr-section">
+      <h2>교육 이수 및 대외활동</h2>
+      <ul>${activitiesHTML}</ul>
+    </section>
+
+    <section class="pr-section">
+      <h2>기술 스택</h2>
+      <ul>${techHTML}</ul>
+    </section>
+
+    <section class="pr-section pr-projects">
+      <h2>Projects</h2>
+      ${projectsHTML}
+    </section>
+  `;
+}
+
+function initPrintResume() {
+  const button = document.getElementById("footer-name-btn");
+  if (!button) return;
+
+  button.addEventListener("click", () => {
+    document.body.classList.add("print-mode");
+    window.print();
+  });
+
+  window.addEventListener("afterprint", () => {
+    document.body.classList.remove("print-mode");
+  });
+}
+
 renderHero();
 renderAbout();
 renderProjects();
@@ -362,4 +523,6 @@ renderAwards();
 renderTech();
 renderContact();
 renderFooter();
+renderPrintResume();
 initModal();
+initPrintResume();
