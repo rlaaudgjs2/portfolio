@@ -8,54 +8,138 @@
 </head>
 <body>
 
-  <!-- Hero -->
-  <header class="hero">
-    <div class="container">
-      <p class="hero-greeting reveal" id="hero-greeting"></p>
-      <h1 class="hero-title reveal" id="hero-title"></h1>
-      <p class="hero-description reveal" id="hero-description"></p>
-    </div>
+  <header class="header">
+    <div class="logo" id="logo">Dev<span>.</span></div>
+    <nav class="nav" id="nav">
+      <a class="nav-link" href="#about">About</a>
+      <a class="nav-link" href="#projects">Projects</a>
+      <a class="nav-link" href="#experience">Experience</a>
+      <a class="nav-link" href="#tech">Tech</a>
+      <a class="nav-link" href="#contact">Contact</a>
+    </nav>
+    <button class="mobile-menu" id="mobile-menu" aria-label="메뉴 열기">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
-  <!-- About: 사진, 소개, 학력, 자격증 -->
-  <section class="about" id="about">
-    <div class="container about-inner">
-      <div class="about-photo reveal">
-        <img id="profile-photo" src="assets/profile-placeholder.svg" alt="프로필 사진" />
-      </div>
-      <div class="about-info">
-        <h2 class="section-label reveal">About</h2>
-        <p class="about-bio reveal" id="profile-bio"></p>
-        <div class="contact-list reveal" id="profile-contact"></div>
+  <main>
 
-        <div class="about-columns">
-          <div class="about-col reveal">
-            <h3>학력</h3>
-            <ul id="education-list" class="info-list"></ul>
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <p class="eyebrow reveal">PORTFOLIO</p>
+          <h1 class="hero-title">
+            <span class="hero-line reveal delay-1" id="hero-greeting"></span>
+            <span class="hero-line reveal delay-2">개발자 <span class="highlight" id="hero-name"></span>입니다.</span>
+          </h1>
+          <p class="hero-description reveal delay-3" id="hero-description"></p>
+          <div class="hero-buttons reveal delay-4">
+            <a class="button button-black" href="#projects"><span>Projects</span><span>→</span></a>
+            <a class="button button-outline" href="#contact"><span>Contact</span><span>→</span></a>
           </div>
-          <div class="about-col reveal">
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg class="hero-svg" viewBox="0 0 600 550">
+            <path class="draw-path" d="M40 480 C 160 380, 120 200, 260 160 S 480 60, 560 40" />
+            <circle class="hero-circle" cx="560" cy="40" r="10"></circle>
+            <circle class="hero-circle small" cx="260" cy="160" r="6"></circle>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>About <em>Me</em></h2>
+        </div>
+
+        <div class="about-lead reveal">
+          <div class="about-photo">
+            <img id="profile-photo" src="assets/profile-placeholder.svg" alt="프로필 사진" />
+          </div>
+          <div class="about-lead-info">
+            <h3 id="about-name-title"></h3>
+            <div class="contact-list" id="profile-contact"></div>
+          </div>
+        </div>
+
+        <div class="capability-grid">
+          <div class="capability reveal delay-1">
+            <span class="number">01</span>
+            <h3>학력</h3>
+            <ul class="capability-list" id="education-list"></ul>
+          </div>
+          <div class="capability reveal delay-2">
+            <span class="number">02</span>
             <h3>자격증</h3>
-            <ul id="certification-list" class="info-list"></ul>
+            <ul class="capability-list" id="certification-list"></ul>
+          </div>
+          <div class="capability reveal delay-3">
+            <span class="number">03</span>
+            <h3>Bio</h3>
+            <p id="profile-bio"></p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Projects: 연도별 프로젝트 -->
-  <section class="projects" id="projects">
-    <div class="container">
-      <h2 class="section-label reveal">Projects</h2>
-      <div id="project-list" class="project-list"></div>
-    </div>
-  </section>
+    <!-- Projects -->
+    <section class="projects" id="projects">
+      <div class="container">
+        <div class="project-heading reveal">
+          <h2>Selected <em>Projects</em></h2>
+          <p class="heading-description">기획부터 배포까지, 실무에서 부딪힌 문제를 근본 원인까지 추적해 해결한 프로젝트들입니다.</p>
+        </div>
+        <div class="project-list" id="project-list"></div>
+      </div>
+    </section>
 
-  <!-- Contact -->
-  <footer class="contact" id="contact">
-    <div class="container">
-      <h2 class="section-label reveal">Contact</h2>
-      <div class="contact-list contact-list-lg reveal" id="footer-contact"></div>
-      <p class="footer-copy">&copy; <span id="footer-year"></span></p>
+    <!-- Experience -->
+    <section class="experience" id="experience">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>Education & <em>Certifications</em></h2>
+        </div>
+        <div class="timeline" id="timeline-list"></div>
+      </div>
+    </section>
+
+    <!-- Tech -->
+    <section class="tech" id="tech">
+      <div class="container">
+        <div class="tech-header reveal">
+          <div>
+            <p class="eyebrow">STACK</p>
+            <h2>Tech <em>Stack</em></h2>
+          </div>
+          <div class="tech-tabs" id="tech-tabs"></div>
+        </div>
+        <div class="tech-panels" id="tech-panels"></div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <div class="container contact-container">
+        <p class="eyebrow reveal">CONTACT</p>
+        <h2 class="contact-title reveal delay-1">Let's <br />Talk</h2>
+        <p class="contact-description reveal delay-2" id="contact-description"></p>
+        <a class="email reveal delay-3" id="contact-email" href="#">
+          <span id="contact-email-text"></span><span>↗</span>
+        </a>
+        <div class="social-links reveal delay-4" id="social-links"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span id="footer-copy"></span>
+      <span id="footer-name"></span>
     </div>
   </footer>
 
@@ -64,23 +148,35 @@
     <div class="modal-backdrop" data-close-modal></div>
     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <button class="modal-close" data-close-modal aria-label="닫기">&times;</button>
-      <img id="modal-photo" class="modal-photo" src="" alt="" />
+      <div class="modal-visual" id="modal-visual"></div>
       <div class="modal-body">
-        <span id="modal-year" class="modal-year"></span>
+        <span class="modal-meta" id="modal-meta"></span>
         <h3 id="modal-title"></h3>
-        <div class="modal-field">
-          <h4>주요 내용</h4>
-          <p id="modal-content"></p>
-        </div>
+        <p class="modal-subtitle" id="modal-subtitle"></p>
+        <p class="modal-overview" id="modal-overview"></p>
+        <div class="tags" id="modal-tags"></div>
+
         <div class="modal-field">
           <h4>규모</h4>
           <p id="modal-scale"></p>
+        </div>
+
+        <div class="modal-field" id="modal-highlights-field">
+          <h4>주요 구현</h4>
+          <ul class="modal-list" id="modal-highlights"></ul>
+        </div>
+
+        <div class="modal-field" id="modal-troubleshooting-field">
+          <h4>트러블슈팅</h4>
+          <ul class="modal-list" id="modal-troubleshooting"></ul>
         </div>
       </div>
     </div>
   </div>
 
   <script src="js/data.js"></script>
+  <script src="content/projects.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
 </body>
 </html>

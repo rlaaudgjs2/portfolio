@@ -1,4 +1,5 @@
-// 이 파일의 값만 채워 넣으면 사이트 내용이 자동으로 반영됩니다.
+// 사이트 전역 콘텐츠(프로필/학력/자격증/기술 스택)입니다.
+// 프로젝트 상세 내용은 content/projects.js의 PROJECT_DETAILS를 사용합니다.
 
 const PROFILE = {
   name: "홍길동",
@@ -7,6 +8,7 @@ const PROFILE = {
   heroDescription: "문제를 발견하고 기술로 해결합니다.",
   photo: "assets/profile-placeholder.svg", // assets 폴더에 사진을 넣고 경로를 바꾸세요
   bio: "한 줄 소개를 여기에 작성하세요.",
+  contactDescription: "새로운 프로젝트나 협업 제안은 언제든 환영합니다.",
   contact: [
     { label: "Email", value: "you@example.com", href: "mailto:you@example.com" },
     { label: "GitHub", value: "github.com/username", href: "https://github.com/username" },
@@ -19,25 +21,24 @@ const PROFILE = {
   ],
 };
 
-// 연도별 프로젝트: year는 하나의 프로젝트만 대응됩니다.
-// stack은 선택 항목입니다 (기술 스택 태그로 표시, 없으면 생략 가능).
-const PROJECTS = [
-  {
-    year: 2024,
-    title: "프로젝트 제목",
-    thumbnail: "assets/project-placeholder.svg",
-    summary: "카드에 보여줄 한 줄 요약",
-    mainContent: "클릭 시 보여줄 주요 내용을 자세히 작성하세요.",
-    scale: "예: 팀 4명 / 3개월 / 사용자 1만명",
-    stack: ["React", "TypeScript"],
-  },
-  {
-    year: 2023,
-    title: "프로젝트 제목",
-    thumbnail: "assets/project-placeholder.svg",
-    summary: "카드에 보여줄 한 줄 요약",
-    mainContent: "클릭 시 보여줄 주요 내용을 자세히 작성하세요.",
-    scale: "예: 개인 프로젝트 / 2개월",
-    stack: ["Node.js"],
-  },
-];
+// Tech 섹션 탭에 사용하는 카테고리별 기술 스택입니다.
+const TECH_STACK = {
+  categories: [
+    { id: "language", label: "Language", items: ["Kotlin", "Dart", "TypeScript", "Python"] },
+    {
+      id: "framework",
+      label: "Framework",
+      items: ["Jetpack Compose", "Flutter", "React Native", "Django", "TensorFlow / Keras"],
+    },
+    {
+      id: "backend",
+      label: "Backend & Infra",
+      items: ["Firebase Auth", "Firestore", "Firebase Cloud Functions", "SQLite", "MMKV", "GitHub Actions"],
+    },
+    {
+      id: "tools",
+      label: "Tools & Libraries",
+      items: ["Hilt", "TanStack Query", "Zod", "Dio", "go_router", "Provider", "table_calendar"],
+    },
+  ],
+};
