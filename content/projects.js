@@ -11,18 +11,25 @@
 // - troubleshooting[]: 문제 해결 { title, problem, cause, solution, code? }
 // - decisions[]: 기술적 의사결정 { title, decision, reason, tradeoff? }
 // - learnings[]: 배운 점 (문자열 배열)
+// - links[]: 실제 배포/문서 링크 { label, href }
 // - needsInput[]: 리포지토리/노트만으로 알 수 없어 본인이 채워야 하는 항목
 
 const PROJECT_DETAILS = [
   {
     id: "aspa",
-    title: "Aspa",
+    title: "ASPA",
     subtitle: "AI 기반 개인 맞춤 학습 도우미 Android 애플리케이션",
-    period: "2025.07 - 2025.10",
+    period: "2025.07 - 2025.09",
     type: "팀 프로젝트 (LIKELION Android Bootcamp 4기)",
     role:
-      "Android 프론트엔드 개발자로서 Hilt 기반 의존성 주입과 Firebase Authentication/Firestore/Functions 연동 설계를 주도. 핵심 기능인 학습 콘텐츠(Study) 및 오답노트(MistakeNoteBook) AI 분석 시스템의 클라이언트 UI와 Firebase Cloud Functions(TypeScript) 서버리스 파이프라인을 전담.",
-    scale: "LIKELION Android Bootcamp 4기 팀 프로젝트 · 2025.07 ~ 2025.10 (약 4개월)",
+      "Android 프론트엔드 개발자로서 Presentation/Domain/Data 레이어를 분리하는 Clean Architecture 설계와 Hilt 기반 의존성 주입, Firebase Authentication/Firestore/Functions 연동을 주도. 핵심 기능인 학습 콘텐츠(Study) 및 오답노트(MistakeNoteBook) AI 분석 시스템의 클라이언트 UI와 Firebase Cloud Functions(TypeScript) 서버리스 파이프라인을 전담.",
+    scale: "LIKELION Android Bootcamp 4기 팀 프로젝트 · 2025.07 ~ 2025.09 (약 3개월)",
+    links: [
+      { label: "Notion · 상세", href: "https://app.notion.com/p/ASPA-AI-328cb41e605e80cd9ff6d1b25fff5c09?pvs=21" },
+      { label: "GitHub", href: "https://github.com/LIKELION-Android-Bootcamp-4th/MansBath" },
+      { label: "Notion · 프로젝트", href: "https://app.notion.com/p/Aspa-278ee015c80280398c64f98a06e1b546?pvs=21" },
+      { label: "Play Store", href: "https://play.google.com/store/apps/details?id=com.aspa2025.aspa2025" },
+    ],
     stack: [
       "Kotlin",
       "Jetpack Compose",
@@ -65,8 +72,26 @@ const PROJECT_DETAILS = [
         what:
           "Hilt로 FirebaseAuth·FirebaseFirestore·FirebaseFunctions(asia-northeast3 서울 리전) 인스턴스를 앱 전역 싱글톤 모듈(FirebaseModule)로 설계하고, Repository 계층에서 Result<T>를 반환하는 표준화된 원격 데이터 아키텍처를 도입했습니다.",
       },
+      {
+        title: "Clean Architecture 레이어 분리",
+        why: "팀 프로젝트 초기에 화면(UI), 비즈니스 로직, 데이터 접근이 뒤섞이면 기능이 늘어날수록 유지보수와 테스트가 어려워질 위험이 있었습니다.",
+        what: "Presentation / Domain / Data 3개 레이어로 분리하고, UiState Interface + StateFlow 기반 단방향 상태 관리로 화면별 분기 처리를 표준화했습니다.",
+      },
     ],
     troubleshooting: [
+      {
+        title: "Gemini AI 응답 파싱 오류",
+        problem: "AI 응답이 항상 동일한 JSON 구조를 보장하지 않아 파싱이 종종 실패했습니다.",
+        cause: "프롬프트만으로 JSON 형식을 유도했는데, 자유 형식 텍스트 응답의 구조가 요청마다 미묘하게 달라졌습니다.",
+        solution:
+          "Gemini 호출 시 responseSchema와 responseMimeType: \"application/json\"으로 응답 구조를 강제하고, DTO 기본값 설정과 프롬프트 강제를 함께 적용해 파싱 안전성을 확보했습니다.",
+      },
+      {
+        title: "퀴즈 저장과 오답노트 생성 데이터 불일치",
+        problem: "퀴즈 결과 저장과 오답노트 생성이 별개 요청으로 처리되어, 중간에 하나가 실패하면 데이터가 불일치했습니다.",
+        cause: "관련된 두 쓰기 작업이 원자적으로 묶여 있지 않아 부분 실패 시나리오가 그대로 노출됐습니다.",
+        solution: "Firestore Batch Write로 관련 AI 작업을 원자적으로 처리해, 부분 실패로 인한 데이터 불일치를 방지했습니다.",
+      },
       {
         title: "오답노트 AI 분석 결과의 Cloud Functions ↔ Firestore 스키마 불일치로 인한 파싱 실패",
         problem:
@@ -128,64 +153,54 @@ const PROJECT_DETAILS = [
   },
 
   {
-    id: "intent-chatbot",
-    title: "Intent 기반 AI 텍스트 챗봇",
-    subtitle: "Intent Classification Chatbot",
-    period: "[날짜 정보 없음]",
-    type: "개인 프로젝트",
-    role: "자연어 전처리, 딥러닝 모델 학습, 추론 파이프라인, CLI 인터페이스, 웹 서비스 백엔드 구조 설계까지 단독(1인) 수행.",
-    scale: "개인 프로젝트 (1인)",
-    stack: ["Python", "TensorFlow", "Keras", "scikit-learn", "Django"],
+    id: "cats-chatbot",
+    title: "Chatbot (cats_project)",
+    subtitle: "GPT 기반 문서 AI 챗봇",
+    period: "2023.03 - 2023.08",
+    type: "팀 프로젝트",
+    role:
+      "팀이 업로드한 내부 문서를 그룹 저장소에 인덱싱하고 GPT-3.5 Turbo가 해당 문서를 참조해 답변하는 협업형 Android 챗봇의 아키텍처 설계와 클라이언트 구현을 담당.",
+    scale: "팀 프로젝트 · 2023.03 ~ 2023.08",
+    stack: ["Java", "Android Studio", "OkHttp3", "Retrofit2", "Firestore", "GPT-3.5 Turbo"],
     overview:
-      "intents.json에 정의된 문장 패턴(patterns)·의도 태그(tag)·응답 목록(responses)을 학습해 사용자 입력 문장의 의도를 분류하고 적절한 응답을 실시간 추론·반환하는 TensorFlow/Keras 기반 NLP 챗봇 코어 엔진 및 Django 웹 서비스 스캐폴딩 프로젝트입니다.",
+      "팀이 업로드한 내부 문서(HWP, PDF 등)를 그룹 저장소에 인덱싱하고, GPT-3.5 Turbo가 해당 문서를 참조하여 팀원 질문에 답변하는 협업형 Android 챗봇입니다.",
+    links: [
+      {
+        label: "Notion",
+        href: "https://app.notion.com/p/Chatbot-cats_project-GPT-AI-328cb41e605e80468317d1cfa92c4b1b?pvs=21",
+      },
+    ],
     highlights: [
       {
-        title: "Keras 기반 의도 분류(Intent Classification) 신경망 설계 및 학습",
-        why: "다양한 문장 표현에서 핵심 의도를 파악해 다중 클래스 라벨(Tag)을 높은 정확도로 추론할 수 있는 경량 딥러닝 모델이 필요했습니다.",
-        what: "텍스트 토큰화 → 시퀀스 패딩 → 정수 라벨 인코딩을 거쳐 Embedding + GlobalAveragePooling1D 기반 분류 모델을 구축했습니다.",
-        how:
-          "Keras Tokenizer로 vocab_size=1000, oov_token=\"<OOV>\" 설정. 입력 길이를 maxlen=20으로 패딩(pad_sequences, truncating='post')하고 scikit-learn LabelEncoder로 라벨 인코딩. Embedding(1000,16) → GlobalAveragePooling1D → Dense(16, relu)×2 → Dense(num_classes, softmax) 구조를 sparse_categorical_crossentropy + adam으로 500 Epoch 학습.",
-        code: {
-          lang: "python",
-          snippet:
-            "model = Sequential([\n" +
-            "    Embedding(vocab_size, embedding_dim, input_length=max_len),\n" +
-            "    GlobalAveragePooling1D(),\n" +
-            "    Dense(16, activation='relu'),\n" +
-            "    Dense(16, activation='relu'),\n" +
-            "    Dense(num_classes, activation='softmax')\n" +
-            "])\n\n" +
-            "model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])\n" +
-            "model.fit(padded_sequences, np.array(training_labels), epochs=500)",
-        },
+        title: "MVC + Fragment 기반 아키텍처",
+        why: "화면 단위로 관심사를 분리해 여러 팀원이 동시에 각자의 화면을 개발할 수 있어야 했습니다.",
+        what: "Fragment 단위로 화면을 나누고 MVC 패턴으로 화면·로직·데이터 접근 책임을 분리했습니다.",
       },
       {
-        title: "CLI 대화형 추론 파이프라인 및 응답 다변화 인터페이스",
-        why: "학습된 모델과 전처리 객체를 영속화해, 터미널에서 대화가 이어질 때 매번 같은 답변만 반복되지 않는 실시간 인터페이스가 필요했습니다.",
-        what: "학습 아티팩트를 pickle/Keras SavedModel로 저장하고, 최고 확률 클래스 선택 및 응답 난수 추출(np.random.choice)을 실행하는 인터랙티브 CLI를 구축했습니다.",
-        how: "tokenizer.pickle·label_encoder.pickle·chat_model 저장 후 재사용. np.argmax(model.predict(...))로 클래스 예측, label_encoder.inverse_transform으로 태그 복원, responses 배열에서 np.random.choice로 응답 다변화. colorama로 User/ChatBot 프롬프트를 구분해 가독성을 높였습니다.",
+        title: "OkHttp3 비동기 GPT API 호출",
+        why: "GPT API 응답을 기다리는 동안 UI가 멈추지 않아야 했습니다.",
+        what: "OkHttp3의 비동기 enqueue로 GPT API를 호출하고, 응답을 runOnUiThread로 받아 UI를 갱신했습니다.",
       },
       {
-        title: "Django 웹 서비스 서빙 스캐폴딩",
-        why: "CLI 기반 추론 코어를 향후 REST API/웹 UI 서비스로 확장할 수 있는 백엔드 골격이 필요했습니다.",
-        what: "Django 3.2 기반 프로젝트(chatbot_site)와 앱(project_site) 구조를 스캐폴딩하고 DB·라우팅 기초 설정을 완료했습니다.",
+        title: "Thread-safe Singleton 공유 상태 관리",
+        why: "UID, 그룹 ID, 폴더명처럼 여러 화면에서 함께 참조하는 상태를 안전하게 공유해야 했습니다.",
+        what: "Thread-safe Singleton 패턴으로 화면 간 공유 상태를 관리했습니다.",
+      },
+      {
+        title: "Retrofit2 + OkHttp3 이원화",
+        why: "GPT API의 동적인 JSON 응답과 자체 백엔드의 선언적 API를 하나의 방식으로 처리하기 어려웠습니다.",
+        what: "GPT(동적 JSON)는 OkHttp3로, 백엔드(선언형 API)는 Retrofit2로 분리해 각각에 맞는 방식으로 처리했습니다.",
+      },
+      {
+        title: "그룹 관리",
+        why: "여러 팀이 같은 앱을 쓰면서 그룹이 중복되거나 데이터가 섞이지 않아야 했습니다.",
+        what: "UUID 기반 팀별 입장 코드로 그룹 중복을 방지하고, Firestore에 그룹 가입 시 users와 group 컬렉션을 함께 갱신했습니다.",
       },
     ],
     troubleshooting: [],
-    decisions: [
-      {
-        title: "분류 모델 구조: GlobalAveragePooling1D vs RNN/LSTM",
-        decision: "LSTM/GRU 대신 GlobalAveragePooling1D 중심의 경량 Feed-Forward 구조를 채택.",
-        reason:
-          "의도 분류는 문장의 장기 의존성보다 핵심 키워드 조합과 임베딩 분산에 의해 결정되는 형태였고, RNN 대비 파라미터가 적어 소규모 데이터셋(intents.json)에서 과적합 위험을 줄이고 CPU에서도 빠른 실시간 추론이 가능했습니다.",
-        tradeoff: "어순 변화나 복잡한 문맥 파악에는 한계가 있어, 패턴 데이터셋 확충과 전처리 고도화가 추가로 필요합니다.",
-      },
-    ],
+    decisions: [],
     learnings: [],
-    needsInput: [
-      "모델 정확도 개선 경험, 하이퍼파라미터 튜닝 시도, 데이터 부족으로 인한 오분류 해결 과정 등 실제 회고",
-      "프로젝트 진행 시기 (연/월)",
-    ],
+    needsInput: ["개발 과정에서의 트러블슈팅 및 회고 (문서 인덱싱/검색 정확도, GPT 응답 품질 등)"],
   },
 
   {
@@ -199,6 +214,12 @@ const PROJECT_DETAILS = [
     scale: "LIKELION Android Bootcamp 4기 팀 프로젝트 · 약 3주 (2025.06.25 ~ 2025.07.17)",
     stack: ["Flutter", "Dart", "Provider", "go_router", "Dio"],
     overview: "옷 쇼핑몰과 코디 커뮤니티 기능이 결합된 Flutter 기반 모바일 애플리케이션입니다.",
+    links: [
+      { label: "Notion · 상세", href: "https://app.notion.com/p/lookTalk-328cb41e605e80949111c8df4fe58095?pvs=21" },
+      { label: "GitHub", href: "https://github.com/LIKELION-Android-Bootcamp-4th/lookTalk" },
+      { label: "서버", href: "http://git.hansul.kr" },
+      { label: "Notion · 프로젝트", href: "https://app.notion.com/p/LookTalk-278ee015c8028075a732df1454b999c2?pvs=21" },
+    ],
     highlights: [
       {
         title: "go_router 및 Provider 기반 인증 상태 가드 (Auth Guard)",
@@ -274,6 +295,13 @@ const PROJECT_DETAILS = [
             "    : checkRefund;",
         },
       },
+      {
+        title: "검색 커뮤니티 탭이 항상 빈 리스트로 표시되는 문제",
+        problem: "SearchCommunityScreen에 진입하면 검색어를 입력해도 커뮤니티 탭 결과가 항상 빈 리스트로 표시됐습니다.",
+        cause:
+          "SearchCommunityScreen이 부모 화면의 SearchViewModel과는 다른 새 ViewModel 인스턴스를 참조하게 되어, 부모에서 실행한 검색 결과가 자식 화면에 반영되지 않았습니다.",
+        solution: "go_router의 extra로 기존 ViewModel 인스턴스를 전달한 뒤, ChangeNotifierProvider.value로 동일 인스턴스를 공유하도록 수정했습니다.",
+      },
     ],
     decisions: [
       {
@@ -294,16 +322,19 @@ const PROJECT_DETAILS = [
 
   {
     id: "onz",
-    title: "ONZ",
+    title: "onz",
     subtitle: "지도 기반 칵테일 바 탐색 앱 (1차 프로젝트)",
-    period: "[날짜 정보 없음]",
-    type: "팀 프로젝트 (1차 프로젝트 — 이후 Cocktail_Front로 재작성)",
+    period: "2025.01 - 2025.06",
+    type: "팀 프로젝트 (1차 프로젝트 — 이후 2차 프로젝트로 재작성)",
     role:
       "프론트엔드 개발자로서 지도 메인 화면 바텀시트-플로팅 버튼 애니메이션 연동, 지역 검색·필터링, 바 상세 화면의 자정 초과 영업시간 계산 로직, 바텀시트 내 제스처 충돌 해결, 리스트 저장(북마크) 화면 구현. 이후 지도 화면 복잡도를 낮추기 위해 MapsViewModel 도입 리팩터링을 주도.",
-    scale: "팀 프로젝트 (1차 프로젝트) · 규모/기간 정보 없음",
-    stack: ["React Native", "TypeScript", "react-native-reanimated", "@gorhom/bottom-sheet", "Google Maps"],
+    scale: "팀 프로젝트 (1차 프로젝트) · 2025.01 ~ 2025.06",
+    stack: ["TypeScript", "React Native", "react-native-reanimated", "@gorhom/bottom-sheet", "Google Maps"],
     overview:
-      "Google Maps 기반으로 서울 지역 칵테일 바를 탐색하고, 지역·키워드 필터링으로 마음에 드는 바를 개인 리스트에 저장할 수 있는 React Native 모바일 애플리케이션입니다.",
+      "서울 내 칵테일 바를 지도 기반으로 탐색하고 나만의 리스트에 저장할 수 있는 앱입니다. Google Maps 위에 커스텀 마커와 바텀시트를 통합해 현재 위치 기반 주변 바 탐색과 지역/키워드 필터링을 제공합니다.",
+    links: [
+      { label: "Notion", href: "https://app.notion.com/p/onz-1-328cb41e605e801e9f48f58fa1e8cf05?pvs=21" },
+    ],
     highlights: [
       {
         title: "바텀시트 위치 기반 플로팅 버튼 인터랙티브 애니메이션",
@@ -319,6 +350,18 @@ const PROJECT_DETAILS = [
       },
     ],
     troubleshooting: [
+      {
+        title: "네이버 로그인 라이브러리 React Native 버전 호환 오류",
+        problem: "네이버 로그인 연동 시 라이브러리에서 원인을 알기 어려운 에러가 발생했습니다.",
+        cause: "네이버 로그인 라이브러리 내장 코드에 당시 사용 중인 React Native 버전과 호환되지 않는 에러 클래스가 존재했습니다.",
+        solution: "라이브러리 내부 코드의 에러 클래스를 직접 수정해 해결하고, 재현 방법과 해결 방법을 네이버 개발자 포럼에 공유했습니다.",
+      },
+      {
+        title: "마커 깜빡임 이슈 (Android)",
+        problem: "Android에서 지도 마커가 렌더링될 때마다 눈에 띄게 깜빡이는 현상이 있었습니다.",
+        cause: "react-native-maps의 Marker가 이미지 로드 전까지 매 렌더마다 뷰를 재계산해 깜빡임이 발생했습니다.",
+        solution: "이미지 onLoad 완료 후 tracksViewChanges를 false로 전환해 불필요한 재렌더를 차단했습니다.",
+      },
       {
         title: "자정을 넘기는 바(Bar) 영업시간의 판단 오류",
         problem: "영업시간이 '18:30~01:30'처럼 자정을 넘는 바는 실제 영업 중임에도 '영업 종료'/'영업 전'으로 잘못 표시됐습니다.",
@@ -366,24 +409,33 @@ const PROJECT_DETAILS = [
       "바텀시트·맵 뷰·스크롤 뷰가 중첩될 때의 터치 이벤트 경쟁을 경험하며, 프레임워크의 제스처 응답자 체계(Gesture Responder System)를 이해하는 것이 문제 해결의 핵심임을 배웠습니다.",
     ],
     needsInput: [
-      "ONZ 초기 버전을 진행하며 느낀 기술적 아쉬움, 이후 Cocktail_Front 재작성 아키텍처 도입에 준 영향에 대한 회고",
-      "프로젝트 진행 기간/팀 규모",
+      "onz 1차 버전을 진행하며 느낀 기술적 아쉬움, 이후 2차 재작성 아키텍처 도입에 준 영향에 대한 회고",
     ],
   },
 
   {
     id: "cocktail-front",
-    title: "Cocktail_Front",
-    subtitle: "칵테일 정보/추천 모바일 앱",
-    period: "[날짜 정보 없음] (ONZ 이후 재작성 프로젝트)",
+    title: "onz",
+    subtitle: "칵테일 정보 제공 앱 (2차 프로젝트)",
+    period: "2025.10 - 2026.01",
     type: "팀 프로젝트",
     role:
-      "프론트엔드 주 개발자로서 전체 커밋의 88%(146/166개) 담당. 데이터 페칭 계층의 TanStack Query 전환 및 MMKV 캐싱 구축, 4개 소셜 로그인 인증 처리 및 에러 타입화, 로컬 SQLite 기반 검색 자동완성 설계, Android 16KB 페이지 크기 대응(네이티브/프레임워크 업그레이드), GitHub Actions 기반 CI/CD 파이프라인 구축 전담.",
-    scale: "팀 프로젝트 · 전체 커밋 166개 중 146개(88%) 담당",
-    stack: ["React Native", "TypeScript", "TanStack Query", "MMKV", "SQLite", "Zod", "Axios", "GitHub Actions"],
-    overview:
-      "소셜 로그인, 취향 기반 추천, 로컬 DB 자동완성, 개인 보관함(북마크)을 제공하는 React Native 기반 모바일 칵테일 정보 애플리케이션입니다. ONZ의 재작성 버전입니다.",
+      "프론트엔드 주 개발자로서 전체 커밋의 88%(146/166개) 담당. 데이터 페칭 계층의 TanStack Query 전환 및 MMKV 캐싱 구축, JWT 토큰 자동 갱신 인터셉터, 로컬 SQLite 기반 검색 자동완성 설계, Android 16KB 페이지 크기 대응(네이티브/프레임워크 업그레이드), GitHub Actions 기반 CI/CD 파이프라인 구축 전담.",
+    scale: "팀 프로젝트 · 2025.10 ~ 2026.01 · 전체 커밋 166개 중 146개(88%) 담당",
+    stack: ["TypeScript", "React Native", "TanStack Query", "MMKV", "SQLite", "Zod", "Axios", "GitHub Actions"],
+    overview: "칵테일 정보 전달을 중점으로 만든 칵테일 애플리케이션입니다. onz 1차 프로젝트의 재작성 버전입니다.",
+    links: [
+      { label: "Notion", href: "https://app.notion.com/p/onz-2-328cb41e605e8068b139f29412e58a41?pvs=21" },
+      { label: "GitHub", href: "https://github.com/MobileOnz/Cocktail_Front" },
+      { label: "Play Store", href: "https://play.google.com/store/apps/details?id=com.cocktail_front&hl=ko" },
+      { label: "App Store", href: "https://apps.apple.com/kr/app/onz/id6744957084" },
+    ],
     highlights: [
+      {
+        title: "MVVM 패턴 설계",
+        why: "비즈니스 로직이 화면 컴포넌트에 뒤섞이면 재사용과 테스트가 어려워질 위험이 있었습니다.",
+        what: "Custom Hook을 ViewModel처럼 사용해 비즈니스 로직을 캡슐화하고, React.memo·useCallback·FlatList 배치 튜닝으로 렌더링을 최적화했습니다.",
+      },
       {
         title: "정적 참조 데이터 기반 로컬 SQLite 검색 자동완성",
         why: "칵테일명처럼 변경 빈도가 낮은 참조 데이터를 입력마다 서버 API로 호출하는 구조는 불필요한 트래픽과 입력 반응성 저하를 유발했습니다.",
@@ -404,6 +456,30 @@ const PROJECT_DETAILS = [
       },
     ],
     troubleshooting: [
+      {
+        title: "JWT 동시 401 경쟁 조건",
+        problem: "여러 API 요청이 동시에 만료된 토큰으로 실패하면서 토큰 갱신이 중복 실행되어, Refresh Token 요청이 겹쳐 인증이 반복 실패했습니다.",
+        cause: "401 응답을 받은 각 요청이 서로의 갱신 상태를 모른 채 각자 리프레시를 시도했습니다.",
+        solution: "isRefreshing 플래그와 Promise 캐싱으로 첫 번째 갱신 요청을 모든 대기 요청이 공유하도록 구현했습니다.",
+      },
+      {
+        title: "협업 진행 중 패키지 버전 충돌로 인한 지연",
+        problem: "개발자별로 라이브러리 버전이 달라 병합 시 충돌이 발생해 개발 시간이 지연됐습니다.",
+        cause: "팀원마다 로컬에 설치된 패키지 버전이 lock 파일과 어긋난 상태로 개발이 진행됐습니다.",
+        solution: "GitHub Actions CI 파이프라인에서 npm ci를 실행해 lock 파일 기준으로 팀 전체의 패키지 버전을 통일했습니다.",
+      },
+      {
+        title: "Android 터치 이벤트 가로채기",
+        problem: "겹쳐진 카드 중 비활성 카드가 활성 카드로 가야 할 터치 이벤트를 가로챘습니다.",
+        cause: "absolute 레이어로 겹친 카드 구조에서 Android는 투명 View도 터치를 가로채는 특성이 있었습니다.",
+        solution: "비활성 카드에 pointerEvents=\"none\"을 적용하고 zIndex/elevation을 명시적으로 설정했습니다.",
+      },
+      {
+        title: "CI 설계 중 브랜치명 슬래시 오류 & SSH URL 충돌",
+        problem: "CI 파이프라인 구축 중 아티팩트 업로드가 실패하고, package-lock에 SSH 형식 URL이 남아 설치가 실패했습니다.",
+        cause: "브랜치명의 슬래시가 artifact 이름 규칙에 허용되지 않았고, yarn에서 npm으로 전환한 뒤 package-lock에 SSH URL이 잔존했습니다.",
+        solution: "bash 문자열 치환으로 브랜치명의 슬래시를 하이픈으로 변환하고, sed 명령으로 SSH URL을 HTTPS로 일괄 변환했습니다.",
+      },
       {
         title: "수동 상태 관리 무한스크롤의 캐싱 부재 및 북마크 동기화 한계",
         problem:
@@ -441,20 +517,23 @@ const PROJECT_DETAILS = [
       "Android 16KB 문제를 CMake 링커 옵션 우회로 접근했다가 지속 실패한 뒤, 프레임워크 자체의 미지원이 원인임을 파악하고 버전 업그레이드로 근본 해결한 경험 — 임시 봉합보다 근본 원인을 식별하는 분석 프로세스의 중요성을 배웠습니다.",
       "로컬에서는 되는데 TestFlight에서만 실패하는 경험을 통해, 빌드 환경과 자동화 파이프라인의 격리가 시스템에 미치는 영향을 체감했습니다. 환경변수 주입과 SDK 라이선스 상태를 배포 파이프라인에서 명시적으로 관리해야 함을 확인했습니다.",
     ],
-    needsInput: ["프로젝트 진행 기간/팀 규모", "추가적인 인적/기술적 회고"],
+    needsInput: ["추가적인 인적/기술적 회고"],
   },
 
   {
     id: "health-note",
     title: "Health Note",
     subtitle: "날짜별 운동·세트·몸무게·사진 기록 및 루틴 관리 앱",
-    period: "2026.03.06 - 2026.03.23",
+    period: "2026.01 - 2026.03",
     type: "개인 프로젝트 (1인)",
     role: "기획 · 설계 · 클라이언트(Flutter) 전 영역 구현 — 도메인 모델, SQLite 스키마/마이그레이션, Repository, 화면별 Cubit 상태 관리, UI 전체를 단독 구현.",
-    scale: "1인 개인 프로젝트 · 2026.03.06 ~ 2026.03.23 (약 3주, 커밋 19개)",
-    stack: ["Flutter", "Dart", "flutter_bloc (Cubit)", "sqflite (SQLite)", "table_calendar", "cached_network_image"],
+    scale: "1인 개인 프로젝트 · 2026.01 ~ 2026.03 (실제 개발 2026.03.06 ~ 2026.03.23, 커밋 19개)",
+    stack: ["Dart", "Flutter", "flutter_bloc (Cubit)", "SQLite (sqflite)", "table_calendar", "cached_network_image"],
     overview:
-      "날짜별로 운동·세트·몸무게·사진을 기록하고, 루틴과 즐겨찾기로 반복되는 운동 관리를 효율화한 개인 운동 기록 모바일 앱입니다. 백엔드 서버 없이 로컬 SQLite 단독으로 동작하며, 운동 종목 카탈로그(약 90여 개) 매칭·상태 관리·DB 스키마 마이그레이션을 모두 클라이언트에서 책임집니다.",
+      "날짜별로 운동·세트·몸무게·사진을 기록하고, 루틴과 즐겨찾기로 효율적으로 관리하는 개인 운동 기록 앱입니다. 서버 통신 없이 로컬로만 동작하는 오프라인 애플리케이션으로, 운동 종목 카탈로그(약 90여 개) 매칭·상태 관리·DB 스키마 마이그레이션을 모두 클라이언트에서 책임집니다.",
+    links: [
+      { label: "Notion", href: "https://app.notion.com/p/Health-Note-328cb41e605e8067b098c01b7bed5908?pvs=21" },
+    ],
     highlights: [
       {
         title: "홈 화면 — 캘린더 기반 운동 기록 조회",
@@ -557,10 +636,13 @@ const PROJECT_DETAILS = [
           "214개 항목의 slug를 free-exercise-db 실제 경로 기준으로 전수 교정해 213/214개를 매칭(1개는 원본에 이미지 자체가 없음). 이미지 로딩 실패 시 errorWidget으로 플레이스홀더를 렌더링하도록 방어 처리.",
       },
       {
-        title: "nullable 상태 필드의 copyWith(null) 문제",
-        problem: "HomeState.copyWith(weight: null)처럼 값을 의도적으로 null로 바꾸려 해도 기존 값이 그대로 유지됐습니다.",
-        cause: "일반적인 copyWith 구현은 매개변수가 null이면 '전달되지 않음'으로 취급해, '명시적 null 설정'과 '값 유지'를 구분하지 못했습니다.",
-        solution: "센티널 객체(_kUndefined)를 기본값으로 사용해 두 케이스를 구분. 날짜 전환 시 이전 몸무게가 남아있던 버그도 같은 패턴을 selectDay()에 적용해 해결.",
+        title: "nullable 상태 필드의 copyWith(null) 문제 — 날짜 전환 시 이전 몸무게가 남아있는 버그",
+        problem:
+          "HomeState.copyWith(weight: null)처럼 값을 의도적으로 null로 바꾸려 해도 기존 값이 유지됐고, 실제로 날짜를 바꾸면 화면에 이전 날짜의 몸무게가 잠깐 남아있었습니다.",
+        cause:
+          "일반적인 copyWith 구현은 매개변수가 null이면 '전달되지 않음'으로 취급해 '명시적 null 설정'과 '값 유지'를 구분하지 못했습니다. 게다가 selectDay()와 _loadWorkouts() 사이에 비동기 공백이 있어 그 사이 UI는 이전 값을 그대로 보여줬고, 비동기가 끝나 weight: null이 내려와도 TextEditingController는 initState에서 한 번만 세팅되고 이후 갱신되지 않았습니다.",
+        solution:
+          "센티널 객체(_kUndefined)를 기본값으로 사용해 '명시적 null'과 '값 유지'를 구분. selectDay()에서 값을 즉시 null로 초기화한 뒤 상태 변경 시 바로 rebuild하여 동기화되도록 같은 패턴을 적용.",
         code: {
           lang: "dart",
           snippet:

@@ -37,7 +37,8 @@ function renderAbout() {
   const educationList = document.getElementById("education-list");
   PROFILE.education.forEach((edu) => {
     const li = document.createElement("li");
-    li.innerHTML = `<span class="info-period">${edu.period}</span><span class="info-title">${edu.school} · ${edu.detail}</span>`;
+    const title = edu.detail ? `${edu.school} · ${edu.detail}` : edu.school;
+    li.innerHTML = `<span class="info-period">${edu.period}</span><span class="info-title">${title}</span>`;
     educationList.appendChild(li);
   });
 
@@ -154,14 +155,51 @@ function renderExperience() {
   PROFILE.certifications.forEach((cert) => {
     const item = document.createElement("div");
     item.className = "timeline-item reveal";
+    const detail = cert.issuer
+      ? `${cert.issuer}${cert.regNo ? ` · 등록번호 ${cert.regNo}` : ""}`
+      : "자격증 취득";
     item.innerHTML = `
       <span class="timeline-date">${cert.date}</span>
       <div>
         <h3>${cert.name}</h3>
-        <p>자격증 취득</p>
+        <p>${detail}</p>
       </div>
     `;
     timeline.appendChild(item);
+  });
+}
+
+/* ================= AWARDS & ACTIVITIES ================= */
+
+function renderAwards() {
+  const list = document.getElementById("awards-list");
+
+  AWARDS.forEach((award) => {
+    const item = document.createElement("div");
+    item.className = "timeline-item reveal";
+    const detail = award.description ? `${award.org} · ${award.description}` : award.org;
+    item.innerHTML = `
+      <span class="timeline-date">${award.date}</span>
+      <div>
+        <h3>${award.title}</h3>
+        <p>${detail}</p>
+      </div>
+    `;
+    list.appendChild(item);
+  });
+
+  ACTIVITIES.forEach((activity) => {
+    const item = document.createElement("div");
+    item.className = "timeline-item reveal";
+    const detail = activity.description ? `${activity.org} · ${activity.description}` : activity.org;
+    item.innerHTML = `
+      <span class="timeline-date">${activity.period}</span>
+      <div>
+        <h3>${activity.title}</h3>
+        <p>${detail}</p>
+      </div>
+    `;
+    list.appendChild(item);
   });
 }
 
@@ -256,6 +294,17 @@ function openModal(project, index) {
 
   renderTags(document.getElementById("modal-tags"), project.stack);
 
+  const linksContainer = document.getElementById("modal-links");
+  linksContainer.innerHTML = "";
+  (project.links || []).forEach((link) => {
+    const a = document.createElement("a");
+    a.href = link.href;
+    a.textContent = link.label;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    linksContainer.appendChild(a);
+  });
+
   const highlightsField = document.getElementById("modal-highlights-field");
   const highlightsList = document.getElementById("modal-highlights");
   highlightsList.innerHTML = "";
@@ -309,6 +358,7 @@ renderHero();
 renderAbout();
 renderProjects();
 renderExperience();
+renderAwards();
 renderTech();
 renderContact();
 renderFooter();

@@ -582,6 +582,10 @@ img {
   background: #dde6dc;
 }
 
+.cats-chatbot {
+  background: #e6dde3;
+}
+
 .image-label {
   position: absolute;
   top: 22px;
@@ -712,7 +716,8 @@ img {
    EXPERIENCE
 ========================================================= */
 
-.experience {
+.experience,
+.awards {
   padding: 140px 0;
   border-top: 1px solid var(--line);
 }
@@ -1039,6 +1044,26 @@ img {
   margin-bottom: 4px;
 }
 
+.modal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 8px;
+}
+
+.modal-links a {
+  padding: 8px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.modal-links a:hover {
+  border-color: var(--text);
+}
+
 /* =========================================================
    SCROLL REVEAL
 ========================================================= */
@@ -1110,6 +1135,7 @@ img {
   .section,
   .about,
   .experience,
+  .awards,
   .tech {
     padding: 100px 0;
   }
@@ -1153,6 +1179,7 @@ img {
   .section,
   .about,
   .experience,
+  .awards,
   .tech {
     padding: 85px 0;
   }
